@@ -53,9 +53,10 @@
 			<!--password="123">-->
 		<!--</jdbcConnection>-->
 		<jdbcConnection driverClass="oracle.jdbc.OracleDriver"
-			connectionURL="jdbc:oracle:thin:@10.100.141.38:1521:dev"
-			userId="t_crowdfund"
-			password="t_crowdfund">
+
+			connectionURL="jdbc:oracle:thin:@xxx:dev"
+			userId="xxx"
+			password="xxx">
 			<!-- 针对oracle数据库 -->
 			<property name="remarksReporting" value="true"></property>
 		</jdbcConnection>
