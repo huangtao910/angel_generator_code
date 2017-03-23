@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.crowdfund.project.dao.ProjectMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.crowdfund.project.entity.ProjectMessage" >
+    <id column="MSG_ID" property="msgId" jdbcType="DECIMAL" />
+    <result column="PRO_ID" property="proId" jdbcType="DECIMAL" />
+    <result column="INVESTOR_ID" property="investorId" jdbcType="DECIMAL" />
+    <result column="FINANCIER_ID" property="financierId" jdbcType="DECIMAL" />
+    <result column="MSG_TYPE" property="msgType" jdbcType="DECIMAL" />
+    <result column="MSG_CONTENT" property="msgContent" jdbcType="VARCHAR" />
+    <result column="CREATE_TIME" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="STATUS" property="status" jdbcType="DECIMAL" />
+    <result column="CHECK_TIME" property="checkTime" jdbcType="TIMESTAMP" />
+    <result column="CHECK_USER_NAME" property="checkUserName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    <if test="fields == null" >
+      MSG_ID, PRO_ID, INVESTOR_ID, FINANCIER_ID, MSG_TYPE, MSG_CONTENT, CREATE_TIME, STATUS, 
+      CHECK_TIME, CHECK_USER_NAME
+    </if>
+    <if test="fields != null" >
+      ${fields}
+    </if>
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.crowdfund.project.entity.ProjectMessageExample" >
+    <include refid="OracleDialectPrefix" />
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from ANGEL_PROJECT_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+    <include refid="OracleDialectSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    MSG_ID,PRO_ID,INVESTOR_ID,FINANCIER_ID,MSG_TYPE,MSG_CONTENT,CREATE_TIME,STATUS,CHECK_TIME,CHECK_USER_NAME
+    from ANGEL_PROJECT_MESSAGE
+    where MSG_ID = #{msgId,jdbcType=DECIMAL}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from ANGEL_PROJECT_MESSAGE
+    where MSG_ID = #{msgId,jdbcType=DECIMAL}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.crowdfund.project.entity.ProjectMessageExample" >
+    delete from ANGEL_PROJECT_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.crowdfund.project.entity.ProjectMessage" >
+    insert into ANGEL_PROJECT_MESSAGE (MSG_ID, PRO_ID, INVESTOR_ID, 
+      FINANCIER_ID, MSG_TYPE, MSG_CONTENT, 
+      CREATE_TIME, STATUS, CHECK_TIME, 
+      CHECK_USER_NAME)
+    values (#{msgId,jdbcType=DECIMAL}, #{proId,jdbcType=DECIMAL}, #{investorId,jdbcType=DECIMAL}, 
+      #{financierId,jdbcType=DECIMAL}, #{msgType,jdbcType=DECIMAL}, #{msgContent,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{status,jdbcType=DECIMAL}, #{checkTime,jdbcType=TIMESTAMP}, 
+      #{checkUserName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.crowdfund.project.entity.ProjectMessage" >
+    insert into ANGEL_PROJECT_MESSAGE
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        MSG_ID,
+      </if>
+      <if test="proId != null" >
+        PRO_ID,
+      </if>
+      <if test="investorId != null" >
+        INVESTOR_ID,
+      </if>
+      <if test="financierId != null" >
+        FINANCIER_ID,
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE,
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT,
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME,
+      </if>
+      <if test="status != null" >
+        STATUS,
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME,
+      </if>
+      <if test="checkUserName != null" >
+        CHECK_USER_NAME,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="msgId != null" >
+        #{msgId,jdbcType=DECIMAL},
+      </if>
+      <if test="proId != null" >
+        #{proId,jdbcType=DECIMAL},
+      </if>
+      <if test="investorId != null" >
+        #{investorId,jdbcType=DECIMAL},
+      </if>
+      <if test="financierId != null" >
+        #{financierId,jdbcType=DECIMAL},
+      </if>
+      <if test="msgType != null" >
+        #{msgType,jdbcType=DECIMAL},
+      </if>
+      <if test="msgContent != null" >
+        #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="checkTime != null" >
+        #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUserName != null" >
+        #{checkUserName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.crowdfund.project.entity.ProjectMessageExample" resultType="java.lang.Integer" >
+    select count(*) from ANGEL_PROJECT_MESSAGE
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update ANGEL_PROJECT_MESSAGE
+    <set >
+      <if test="record.msgId != null" >
+        MSG_ID = #{record.msgId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.proId != null" >
+        PRO_ID = #{record.proId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.investorId != null" >
+        INVESTOR_ID = #{record.investorId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.financierId != null" >
+        FINANCIER_ID = #{record.financierId,jdbcType=DECIMAL},
+      </if>
+      <if test="record.msgType != null" >
+        MSG_TYPE = #{record.msgType,jdbcType=DECIMAL},
+      </if>
+      <if test="record.msgContent != null" >
+        MSG_CONTENT = #{record.msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.status != null" >
+        STATUS = #{record.status,jdbcType=DECIMAL},
+      </if>
+      <if test="record.checkTime != null" >
+        CHECK_TIME = #{record.checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.checkUserName != null" >
+        CHECK_USER_NAME = #{record.checkUserName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update ANGEL_PROJECT_MESSAGE
+    set MSG_ID = #{record.msgId,jdbcType=DECIMAL},
+      PRO_ID = #{record.proId,jdbcType=DECIMAL},
+      INVESTOR_ID = #{record.investorId,jdbcType=DECIMAL},
+      FINANCIER_ID = #{record.financierId,jdbcType=DECIMAL},
+      MSG_TYPE = #{record.msgType,jdbcType=DECIMAL},
+      MSG_CONTENT = #{record.msgContent,jdbcType=VARCHAR},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      STATUS = #{record.status,jdbcType=DECIMAL},
+      CHECK_TIME = #{record.checkTime,jdbcType=TIMESTAMP},
+      CHECK_USER_NAME = #{record.checkUserName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.crowdfund.project.entity.ProjectMessage" >
+    update ANGEL_PROJECT_MESSAGE
+    <set >
+      <if test="proId != null" >
+        PRO_ID = #{proId,jdbcType=DECIMAL},
+      </if>
+      <if test="investorId != null" >
+        INVESTOR_ID = #{investorId,jdbcType=DECIMAL},
+      </if>
+      <if test="financierId != null" >
+        FINANCIER_ID = #{financierId,jdbcType=DECIMAL},
+      </if>
+      <if test="msgType != null" >
+        MSG_TYPE = #{msgType,jdbcType=DECIMAL},
+      </if>
+      <if test="msgContent != null" >
+        MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null" >
+        STATUS = #{status,jdbcType=DECIMAL},
+      </if>
+      <if test="checkTime != null" >
+        CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="checkUserName != null" >
+        CHECK_USER_NAME = #{checkUserName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where MSG_ID = #{msgId,jdbcType=DECIMAL}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.crowdfund.project.entity.ProjectMessage" >
+    update ANGEL_PROJECT_MESSAGE
+    set PRO_ID = #{proId,jdbcType=DECIMAL},
+      INVESTOR_ID = #{investorId,jdbcType=DECIMAL},
+      FINANCIER_ID = #{financierId,jdbcType=DECIMAL},
+      MSG_TYPE = #{msgType,jdbcType=DECIMAL},
+      MSG_CONTENT = #{msgContent,jdbcType=VARCHAR},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      STATUS = #{status,jdbcType=DECIMAL},
+      CHECK_TIME = #{checkTime,jdbcType=TIMESTAMP},
+      CHECK_USER_NAME = #{checkUserName,jdbcType=VARCHAR}
+    where MSG_ID = #{msgId,jdbcType=DECIMAL}
+  </update>
+  <sql id="OracleDialectPrefix" >
+    <if test="page != null" >
+      select * from ( select row_.*, rownum rownum_ from ( 
+    </if>
+  </sql>
+  <sql id="OracleDialectSuffix" >
+    <if test="page != null" >
+      <![CDATA[ ) row_ ) where rownum_ > #{page.begin} and rownum_ <= #{page.end} ]]>
+    </if>
+  </sql>
+</mapper>
